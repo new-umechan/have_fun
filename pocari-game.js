@@ -25,8 +25,42 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     }
 
+    class Bullet {
+        constructor(x, y, target) {
+            this.element = document.createElement('div');
+            this.element.className = 'bullet';
+            this.x = x;
+            this.y = y;
+            this.target = target;
+            this.element.style.left = `${this.x}px`;
+            this.element.style.top = `${this.y}px`;
+            gameArea.appendChild(this.element);
+        }
+
+        move() {
+            const dx = this.target.x - this.x;
+            const dy = this.target.y - this.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 5) {
+                gameArea.removeChild(this.element);
+                bullets = bullets.filter(b => b !== this);
+                gameArea.removeChild(this.target.element);
+                enemies = enemies.filter(e => e !== this.target);
+                score++;
+                scoreDisplay.textContent = `スコア: ${score}`;
+            } else {
+                this.x += dx / distance * 5;
+                this.y += dy / distance * 5;
+                this.element.style.left = `${this.x}px`;
+                this.element.style.top = `${this.y}px`;
+            }
+        }
+    }
+
     let enemies = [];
     let towers = [];
+    let bullets = [];
 
     setInterval(() => {
         enemies.push(new Enemy());
@@ -34,6 +68,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     setInterval(() => {
         enemies.forEach(enemy => enemy.move());
+        bullets.forEach(bullet => bullet.move());
     }, 50);
 
     gameArea.addEventListener('click', (event) => {
@@ -47,17 +82,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     setInterval(() => {
         towers.forEach(tower => {
-            enemies.forEach(enemy => {
-                const dx = parseInt(tower.style.left) - enemy.x;
-                const dy = parseInt(tower.style.top) - enemy.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-                if (distance < 50) {
-                    score++;
-                    scoreDisplay.textContent = `スコア: ${score}`;
-                    gameArea.removeChild(enemy.element);
-                    enemies = enemies.filter(e => e !== enemy);
-                }
-            });
+            if (enemies.length > 0) {
+                const enemy = enemies[Math.floor(Math.random() * enemies.length)];
+                const bullet = new Bullet(parseInt(tower.style.left) + 25, parseInt(tower.style.top) + 25, enemy);
+                bullets.push(bullet);
+            }
         });
-    }, 100);
+    }, 1000);
 });
