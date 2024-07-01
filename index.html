@@ -14,6 +14,7 @@
             margin: 0;
             font-family: Arial, sans-serif;
             background: #f0f0f0;
+            overflow: hidden; /* 画面外に要素が出ないようにする */
         }
         #container {
             display: flex;
@@ -28,6 +29,8 @@
         #text {
             font-size: 3em; /* フォントサイズを大きく設定 */
             margin: 20px;
+            position: relative;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 1, 1), opacity 0.5s; /* 加速度的に動くように設定、透明度も変更 */
         }
         #score, #timer {
             font-size: 1.5em;
@@ -50,6 +53,8 @@
         const textElement = document.getElementById("text");
         const scoreElement = document.getElementById("score");
         const timerElement = document.getElementById("timer");
+        let position = 0; // 初期位置を設定
+        const maxWidth = window.innerWidth / 2; // 中央からの最大幅を設定
 
         function updateText() {
             const randomIndex = Math.floor(Math.random() * texts.length);
@@ -84,8 +89,15 @@
             }, 1000);
         }
 
+        function updatePosition() {
+            const opacity = 1 - Math.min(Math.abs(position) / maxWidth, 1); // 位置に基づいて透明度を計算
+            textElement.style.transform = `translateX(${position}px)`;
+            textElement.style.opacity = opacity;
+        }
+
         document.addEventListener("keydown", (event) => {
             if (event.key === "ArrowRight") { // 右矢印キー
+                position += 100; // 右に100px動かす
                 if (textElement.textContent !== "pocari") {
                     updateScore(1);
                     resetTimer();
@@ -93,6 +105,7 @@
                     endGame();
                 }
             } else if (event.key === "ArrowLeft") { // 左矢印キー
+                position -= 100; // 左に100px動かす
                 if (textElement.textContent === "pocari") {
                     updateScore(1);
                     resetTimer();
@@ -101,6 +114,7 @@
                 }
             }
             updateText();
+            updatePosition();
         });
 
         startGame();
