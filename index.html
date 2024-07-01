@@ -57,13 +57,8 @@
         }
 
         function resetPosition() {
-            textElement.style.transition = 'none';
-            textElement.style.transform = 'translateX(0px)';
+            textElement.style.left = '50%';
             textElement.style.opacity = 1;
-            // 次のフェードアウトのための設定
-            requestAnimationFrame(() => {
-                textElement.style.transition = 'transform 0.2s cubic-bezier(0.4, 0, 1, 1), opacity 0.2s';
-            });
         }
 
         function fadeOutText() {
@@ -73,7 +68,7 @@
 
         document.addEventListener("keydown", (event) => {
             if (event.key === "ArrowRight") {
-                textElement.style.transform = `translateX(${2 * maxWidth}px)`;
+                textElement.style.left = 'calc(50% + 200px)'; // 右に200px移動
                 if (textElement.textContent !== "pocari") {
                     updateScore(1);
                     resetTimer();
@@ -81,7 +76,7 @@
                     endGame();
                 }
             } else if (event.key === "ArrowLeft") {
-                textElement.style.transform = `translateX(${-2 * maxWidth}px)`;
+                textElement.style.left = 'calc(50% - 200px)'; // 左に200px移動
                 if (textElement.textContent === "pocari") {
                     updateScore(1);
                     resetTimer();
@@ -92,7 +87,7 @@
             setTimeout(() => {
                 fadeOutText();
                 setTimeout(() => {
-                    resetPosition();
+                    resetPosition(); // 位置を即座にリセット
                     updateText();
                 }, 250); // フェードアウト後に新しい文字を表示するまでの時間
             }, 200); // 文字がフェードアウトする時間を確保してから新しい文字を表示
