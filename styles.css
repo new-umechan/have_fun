@@ -23,8 +23,8 @@ body {
     top: 50%; /* 縦方向の中央に */
     transform: translate(-50%, -50%); /* 中央揃えのための補正 */
     font-size: 3em;
-    margin: 20px;
-    transition: left 0.2s cubic-bezier(0.4, 0, 1, 1), opacity 0.1s; /* 透明度と位置の変化速度 */
+    margin: 30px;
+    transition: left 0.2s cubic-bezier(0.4, 0, 1, 1), opacity 0.03s; /* 透明度と位置の変化速度 */
 }
 
 #score, #timer {
