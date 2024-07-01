@@ -21,7 +21,6 @@
         const textElement = document.getElementById("text");
         const scoreElement = document.getElementById("score");
         const timerElement = document.getElementById("timer");
-        const maxWidth = window.innerWidth / 4;
 
         function updateText() {
             const randomIndex = Math.floor(Math.random() * texts.length);
@@ -62,7 +61,7 @@
         }
 
         function fadeOutText() {
-            textElement.style.transition = 'opacity 0.2s';
+            textElement.style.transition = 'opacity 0.1s'; /* 透明度の変化を早く */
             textElement.style.opacity = 0;
         }
 
@@ -89,8 +88,8 @@
                 setTimeout(() => {
                     resetPosition(); // 位置を即座にリセット
                     updateText();
-                }, 250); // フェードアウト後に新しい文字を表示するまでの時間
-            }, 200); // 文字がフェードアウトする時間を確保してから新しい文字を表示
+                }, 150); // フェードアウト後に新しい文字を表示するまでの時間
+            }, 100); // 文字がフェードアウトする時間を確保してから新しい文字を表示
         });
 
         startGame();
