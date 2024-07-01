@@ -90,8 +90,10 @@
                 }
             }
             updatePosition();
-            setTimeout(updateText, 200);
-            setTimeout(resetPosition, 200); // すぐに位置をリセット
+            setTimeout(() => {
+                updateText();
+                resetPosition();
+            }, 200); // 文字がフェードアウトする時間を確保してから新しい文字を表示
         });
 
         startGame();
