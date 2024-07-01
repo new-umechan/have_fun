@@ -59,11 +59,6 @@
             textElement.style.left = 'translate(-50%, -50%)';
             textElement.style.opacity = 1;
         }
-
-        function fadeOutText() {
-            textElement.style.transition = 'opacity 0.03s';
-            textElement.style.opacity = 0;
-        }
         
         document.addEventListener("keydown", (event) => {
             if (event.key === "ArrowRight") {
@@ -95,10 +90,12 @@
         });
         
         function fadeOutText() {
+            textElement.style.transition = 'opacity 0.5s ease';
             textElement.style.opacity = 0;
         }
         
         function resetPosition() {
+            textElement.style.transition = ''; // トランジションをリセット
             textElement.style.transform = 'translate(-50%, -50%)';
         }
 
