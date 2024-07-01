@@ -13,10 +13,18 @@
             height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
+            background: #f0f0f0;
         }
-        #text {
-            font-size: 2em;
+        #container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 800px;
+        }
+        .text {
+            font-size: 3em; /* フォントサイズを大きく設定 */
             margin: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* 文字に影をつける */
         }
         #score, #timer {
             font-size: 1.5em;
@@ -25,7 +33,11 @@
     </style>
 </head>
 <body>
-    <div id="text">準備中...</div>
+    <div id="container">
+        <div id="pocari" class="text">右: pocari</div>
+        <div id="other" class="text">左: それ以外</div>
+    </div>
+    <div id="text" class="text">準備中...</div>
     <div id="score">ポイント: 0</div>
     <div id="timer">残り時間: 10秒</div>
     <script>
