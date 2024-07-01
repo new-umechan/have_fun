@@ -75,10 +75,6 @@
             textElement.style.opacity = 0;
         }
 
-        function fadeInText() {
-            textElement.style.opacity = 1;
-        }
-
         document.addEventListener("keydown", (event) => {
             if (event.key === "ArrowRight") {
                 textElement.style.transform = `translateX(${2 * maxWidth}px)`;
@@ -102,7 +98,6 @@
                 fadeOutText();
                 setTimeout(() => {
                     updateText();
-                    fadeInText();
                     resetPosition();
                 }, 200); // フェードアウト後に新しい文字を表示するまでの時間
             }, 200); // 文字がフェードアウトする時間を確保してから新しい文字を表示
