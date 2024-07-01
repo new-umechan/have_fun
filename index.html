@@ -58,6 +58,7 @@
         function resetPosition() {
             textElement.style.left = '50%';
             textElement.style.opacity = 1;
+            textElement.style.transform = 'translate(-50%, -50%)'; // 中央にリセット
         }
 
         function fadeOutText() {
@@ -67,7 +68,7 @@
 
         document.addEventListener("keydown", (event) => {
             if (event.key === "ArrowRight") {
-                textElement.style.translate = 'calc(50% + 300px)';
+                textElement.style.transform = 'translate(calc(-50% + 300px), -50%)';
                 if (textElement.textContent !== "pocari") {
                     updateScore(1);
                     resetTimer();
@@ -75,7 +76,7 @@
                     endGame();
                 }
             } else if (event.key === "ArrowLeft") {
-                textElement.style.translate = 'calc(50% - 300px)';
+                textElement.style.transform = 'translate(calc(-50% - 300px), -50%)';
                 if (textElement.textContent === "pocari") {
                     updateScore(1);
                     resetTimer();
