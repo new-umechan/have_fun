@@ -58,12 +58,12 @@
 
         function resetPosition() {
             textElement.style.transition = 'none';
+            textElement.style.transform = 'translateX(0px)'; // この行を先に移動
             textElement.style.opacity = 1;
             // 次のフェードアウトのための設定
             setTimeout(() => {
                 textElement.style.transition = 'transform 0.2s cubic-bezier(0.4, 0, 1, 1), opacity 0.2s';
             }, 0);
-            textElement.style.transform = 'translateX(0px)';
         }
 
         function fadeOutText() {
@@ -92,8 +92,8 @@
             setTimeout(() => {
                 fadeOutText();
                 setTimeout(() => {
-                    resetPosition();
-                    updateText();
+                    updateText(); // 先に新しい文字を設定
+                    resetPosition(); // その後位置をリセット
                 }, 250); // フェードアウト後に新しい文字を表示するまでの時間
             }, 180); // 文字がフェードアウトする時間を確保してから新しい文字を表示
         });
