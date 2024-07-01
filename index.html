@@ -3,21 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ポカリタワーディフェンスゲーム</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>ポイント獲得ゲーム</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        #text {
+            font-size: 2em;
+            margin: 20px;
+        }
+        #score, #timer {
+            font-size: 1.5em;
+            margin: 10px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>ポカリタワーディフェンスゲーム</h1>
-        <p>ポカリが迫り来るのを防げ！</p>
-        <div id="gameArea">
-            <!-- ゲームのエリア -->
-        </div>
-        <div id="towerArea">
-            <!-- タワーを配置するエリア -->
-        </div>
-        <div id="score">スコア: 0</div>
-    </div>
-    <script src="pocari-game.js"></script>
+    <div id="text">準備中...</div>
+    <div id="score">ポイント: 0</div>
+    <div id="timer">残り時間: 10秒</div>
+    <script>
+        let score = 0;
+        let timeLeft = 10;
+        const texts = ["pocari", "pacori", "pocory", "pacary"];
+        const textElement = document.getElementById("text");
+        const scoreElement = document.getElementById("score");
+        const timerElement = document.getElementById("timer");
+
+        function updateText() {
+            const randomIndex = Math.floor(Math.random() * texts.length);
+            textElement.textContent = texts[randomIndex];
+        }
+
+        function updateScore(points) {
+            score += points;
+            scoreElement.textContent = `ポイント: ${score}`;
+        }
+
+        function endGame() {
+            alert("ゲームオーバー！");
+            location.reload();
+        }
+
+        function startGame() {
+            updateText();
+            const gameInterval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(gameInterval);
+                    endGame();
+                } else {
+                    timeLeft--;
+                    timerElement.textContent = `残り時間: ${timeLeft}秒`;
+                }
+            }, 1000);
+        }
+
+        textElement.addEventListener("click", (event) => {
+            if (textElement.textContent === "pocari" && event.button === 2) {
+                updateScore(1);
+            } else if (textElement.textContent !== "pocari" && event.button === 0) {
+                updateScore(1);
+            } else {
+                endGame();
+            }
+            updateText();
+        });
+
+        document.addEventListener("contextmenu", (event) => {
+            event.preventDefault();
+        });
+
+        startGame();
+    </script>
 </body>
 </html>
