@@ -64,19 +64,21 @@
             }, 1000);
         }
 
-        textElement.addEventListener("click", (event) => {
-            if (textElement.textContent === "pocari" && event.button === 2) {
-                updateScore(1);
-            } else if (textElement.textContent !== "pocari" && event.button === 0) {
-                updateScore(1);
-            } else {
-                endGame();
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "ArrowRight") { // 右矢印キー
+                if (textElement.textContent === "pocari") {
+                    updateScore(1);
+                } else {
+                    endGame();
+                }
+            } else if (event.key === "ArrowLeft") { // 左矢印キー
+                if (textElement.textContent !== "pocari") {
+                    updateScore(1);
+                } else {
+                    endGame();
+                }
             }
             updateText();
-        });
-
-        document.addEventListener("contextmenu", (event) => {
-            event.preventDefault();
         });
 
         startGame();
