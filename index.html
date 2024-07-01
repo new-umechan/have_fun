@@ -7,52 +7,113 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="container">
-        <div id="pocari" class="text">左: pocari</div>
-        <div id="other" class="text">右: それ以外</div>
+    <div id="start-screen">
+        <h1>pocari判定ゲーム</h1>
+        <button id="start-button">スタート</button>
     </div>
-    <div id="text" class="text">準備中...</div>
-    <div id="score">ポイント: 0</div>
-    <div id="timer">残り時間: 5秒</div>
+    
+    <div id="container" style="display: none;">
+        <div id="pocari" class="text">pocari ←</div>
+        <div id="other" class="text">→ another</div>
+    </div>
+    <div id="text" class="text" style="display: none;">準備中...</div>
+    <div id="timer" style="display: none;">5.0s</div>
+    <div id="count" style="display: none;">0</div>
+    <div id="notification" style="display: none;" class="notification">Level up! 時間が短くなります</div>
+    
+    <div id="game-over" style="display: none;">
+        <h1>Game Over</h1>
+        <p id="final-score">Your Score: 0</p>
+        <button id="game-over-button" onclick="restartGame()">Restart</button>
+    </div>
+
     <script>
         let score = 0;
-        let timeLeft = 5;
-        const texts = ["pocari", "pacori", "pocory", "pacary"];
+        let timeLeft = 5.0;
+        let initialTime = 5.0; // 初期時間の設定
+        let count = 0; // カウント数を追跡
+        const texts = ["pacori", "pocary", "qacari", "pocani", "pocori", "aquarius", "morimori"]; // "pocari"以外のテキスト
         const textElement = document.getElementById("text");
-        const scoreElement = document.getElementById("score");
         const timerElement = document.getElementById("timer");
+        const countElement = document.getElementById("count");
+        const containerElement = document.getElementById("container");
+        const gameOverElement = document.getElementById("game-over");
+        const finalScoreElement = document.getElementById("final-score");
+        const startScreenElement = document.getElementById("start-screen");
+        const startButton = document.getElementById("start-button");
+        const gameOverButton = document.getElementById("game-over-button");
+        const notificationElement = document.getElementById("notification");
 
         function updateText() {
-            const randomIndex = Math.floor(Math.random() * texts.length);
-            textElement.textContent = texts[randomIndex];
+            const randomValue = Math.random();
+            if (randomValue < 1/3) {
+                textElement.textContent = "pocari";
+            } else {
+                const randomIndex = Math.floor(Math.random() * texts.length);
+                textElement.textContent = texts[randomIndex];
+            }
+            adjustTextPosition();
+        }
+
+        function adjustTextPosition() {
+            const textRect = textElement.getBoundingClientRect();
+            const textWidth = textRect.width;
+            const textHeight = textRect.height;
+            textElement.style.left = `50%`;
+            textElement.style.top = `50%`;
+        }
+
+        function showNotification() {
+            notificationElement.style.display = "block";
+            notificationElement.style.opacity = 1;
+            setTimeout(() => {
+                notificationElement.style.opacity = 0;
+                setTimeout(() => {
+                    notificationElement.style.display = "none";
+                }, 500); // フェードアウトの時間と一致させる
+            }, 1000); // 1秒後にフェードアウト開始
         }
 
         function updateScore(points) {
             score += points;
-            scoreElement.textContent = `ポイント: ${score}`;
+            count += 1; // カウントを増やす
+            countElement.textContent = count; // カウントを表示
+            if (count % 10 === 0) {
+                initialTime *= 0.9; // 初期時間を0.9倍にする
+                showNotification(); // Level up! 時間が短くなりますを表示
+            }
         }
 
         function endGame() {
-            alert("ゲームオーバー！");
-            location.reload();
+            containerElement.style.display = "none";
+            textElement.style.display = "none";
+            timerElement.style.display = "none";
+            countElement.style.display = "none";
+            finalScoreElement.textContent = `Your Score: ${score}`;
+            gameOverElement.style.display = "flex";
         }
 
         function resetTimer() {
-            timeLeft = 5;
-            timerElement.textContent = `残り時間: ${timeLeft}秒`;
+            timeLeft = initialTime;
+            timerElement.textContent = `${timeLeft.toFixed(1)}`;
         }
 
         function startGame() {
+            startScreenElement.style.display = "none";
+            containerElement.style.display = "flex";
+            textElement.style.display = "block";
+            timerElement.style.display = "block";
+            countElement.style.display = "block";
             updateText();
             const gameInterval = setInterval(() => {
                 if (timeLeft <= 0) {
                     clearInterval(gameInterval);
                     endGame();
                 } else {
-                    timeLeft--;
-                    timerElement.textContent = `残り時間: ${timeLeft}秒`;
+                    timeLeft -= 0.1;
+                    timerElement.textContent = `${timeLeft.toFixed(1)} s`;
                 }
-            }, 1000);
+            }, 100);
         }
 
         document.addEventListener("keydown", (event) => {
@@ -82,11 +143,19 @@
 
         function resetPosition() {
             textElement.style.transition = ''; // トランジションをリセット
-            textElement.style.transform = 'translate(-50%, -50%)';
+            textElement.style.transform = ''; // 初期位置にリセット
             textElement.style.animationName = ''; // アニメーションをリセット
+            adjustTextPosition(); // 位置を再調整
         }
 
-        startGame();
+        function restartGame() {
+            location.reload(); // ゲームをリロードして再スタート
+        }
+
+        startButton.addEventListener('click', startGame);
+        gameOverButton.addEventListener('click', restartGame); // Restartボタンにイベントリスナーを追加
+
+        window.addEventListener('resize', adjustTextPosition); // ウィンドウサイズ変更時に再調整
     </script>
 </body>
 </html>
