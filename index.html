@@ -53,8 +53,7 @@
         const textElement = document.getElementById("text");
         const scoreElement = document.getElementById("score");
         const timerElement = document.getElementById("timer");
-        let position = 0; // 初期位置を設定
-        const maxWidth = window.innerWidth / 2; // 中央からの最大幅を設定
+        const maxWidth = window.innerWidth / 4; // 中央からの最大幅を設定
 
         function updateText() {
             const randomIndex = Math.floor(Math.random() * texts.length);
@@ -89,15 +88,20 @@
             }, 1000);
         }
 
+        function resetPosition() {
+            textElement.style.transform = 'translateX(0px)';
+            textElement.style.opacity = 1;
+        }
+
         function updatePosition() {
+            const position = parseFloat(textElement.style.transform.replace('translateX(', '').replace('px)', ''));
             const opacity = 1 - Math.min(Math.abs(position) / maxWidth, 1); // 位置に基づいて透明度を計算
-            textElement.style.transform = `translateX(${position}px)`;
             textElement.style.opacity = opacity;
         }
 
         document.addEventListener("keydown", (event) => {
             if (event.key === "ArrowRight") { // 右矢印キー
-                position += 100; // 右に100px動かす
+                textElement.style.transform = `translateX(${2 * maxWidth}px)`; // 右に動かす
                 if (textElement.textContent !== "pocari") {
                     updateScore(1);
                     resetTimer();
@@ -105,7 +109,7 @@
                     endGame();
                 }
             } else if (event.key === "ArrowLeft") { // 左矢印キー
-                position -= 100; // 左に100px動かす
+                textElement.style.transform = `translateX(${-2 * maxWidth}px)`; // 左に動かす
                 if (textElement.textContent === "pocari") {
                     updateScore(1);
                     resetTimer();
@@ -113,8 +117,9 @@
                     endGame();
                 }
             }
-            updateText();
             updatePosition();
+            updateText();
+            resetPosition(); // テキストの位置をリセット
         });
 
         startGame();
