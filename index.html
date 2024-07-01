@@ -75,13 +75,9 @@
             }
 
             setTimeout(() => {
-                textElement.style.animationName = 'fadeOut';
-                setTimeout(() => {
-                    resetPosition(); // 位置を即座にリセット
-                    updateText();
-                    textElement.style.animationName = 'fadeIn';
-                }, 500); // フェードアウト後に新しい文字を表示するまでの時間
-            }, 100); // 文字がフェードアウトする時間を確保してから新しい文字を表示
+                resetPosition(); // 位置を即座にリセット
+                updateText();
+            }, 200); // 文字がフェードアウトする時間を確保してから新しい文字を表示
         });
 
         function resetPosition() {
