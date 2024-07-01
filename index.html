@@ -67,7 +67,7 @@
 
         document.addEventListener("keydown", (event) => {
             if (event.key === "ArrowRight") {
-                textElement.style.left = 'calc(50% + 300px)';
+                textElement.style.translate = 'calc(50% + 300px)';
                 if (textElement.textContent !== "pocari") {
                     updateScore(1);
                     resetTimer();
@@ -75,7 +75,7 @@
                     endGame();
                 }
             } else if (event.key === "ArrowLeft") {
-                textElement.style.left = 'calc(50% - 300px)';
+                textElement.style.translate = 'calc(50% - 300px)';
                 if (textElement.textContent === "pocari") {
                     updateScore(1);
                     resetTimer();
