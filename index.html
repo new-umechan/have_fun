@@ -58,7 +58,7 @@
 
         function resetPosition() {
             textElement.style.transition = 'none';
-            textElement.style.transform = 'translateX(0px)'; // この行を先に移動
+            textElement.style.transform = 'translateX(0px)';
             textElement.style.opacity = 1;
             // 次のフェードアウトのための設定
             setTimeout(() => {
@@ -92,10 +92,10 @@
             setTimeout(() => {
                 fadeOutText();
                 setTimeout(() => {
-                    updateText(); // 先に新しい文字を設定
-                    resetPosition(); // その後位置をリセット
+                    resetPosition();
+                    updateText();
                 }, 250); // フェードアウト後に新しい文字を表示するまでの時間
-            }, 180); // 文字がフェードアウトする時間を確保してから新しい文字を表示
+            }, 200); // 文字がフェードアウトする時間を確保してから新しい文字を表示
         });
 
         startGame();
