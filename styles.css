@@ -1,3 +1,18 @@
+.notification {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2em;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.5s ease-in-out;
+    opacity: 0;
+    z-index: 20;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -10,11 +25,39 @@ body {
     overflow: hidden;
 }
 
+#start-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: #f0f0f0;
+}
+
+#start-button {
+    padding: 8px 16px;
+    font-size: 1.5em;
+    cursor: pointer;
+    border-radius: 10px; /* 角を丸くする */
+}
+
+
 #container {
     display: flex;
     justify-content: space-around;
     width: 100%;
     max-width: 800px;
+}
+
+#count {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 10em;
+    color: rgba(0, 0, 0, 0.1); /* 色を薄くする */
+    z-index: -1; /* 背景の後ろに配置 */
+    pointer-events: none; /* マウスイベントを無視する */
 }
 
 #text {
@@ -23,10 +66,32 @@ body {
     top: 50%;
     transform: translate(-50%, -50%);
     font-size: 3em;
-    margin: 30px;
+    margin: 0px;
     transition: opacity 0.2s ease; /* 透明度の変化速度を0.2秒に */
     animation-duration: 0.2s; /* アニメーションの継続時間を0.2秒に */
     animation-fill-mode: forwards;
+}
+
+#game-over {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+    z-index: 10; /* 画面上の他の要素よりも前面に表示 */
+    font-size: 2em; /* 中央の文字より小さいフォントサイズ */
+    font-family: Arial, sans-serif; /* フォントを統一 */
+}
+
+#game-over-button {
+    padding: 8px 16px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 10px; /* 角を丸くする */
 }
 
 @keyframes moveRight {
@@ -58,10 +123,11 @@ body {
     top: 10px; /* 画面の上部に固定 */
 }
 
-#score {
-    left: 10px; /* 左に固定 */
-}
-
 #timer {
-    right: 10px; /* 右に固定 */
+    font-size: 1.5em;
+    margin: 10px;
+    position: absolute;
+    top: calc(50% - 120px); /* 画面の中央の少し上 */
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
