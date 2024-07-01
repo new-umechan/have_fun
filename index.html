@@ -22,9 +22,8 @@
             max-width: 800px;
         }
         .text {
-            font-size: 3em; /* フォントサイズを大きく設定 */
+            font-size: 2em; /* フォントサイズを小さく設定 */
             margin: 20px;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* 文字に影をつける */
         }
         #score, #timer {
             font-size: 1.5em;
@@ -34,8 +33,8 @@
 </head>
 <body>
     <div id="container">
-        <div id="pocari" class="text">右: pocari</div>
-        <div id="other" class="text">左: それ以外</div>
+        <div id="pocari" class="text">左: pocari</div>
+        <div id="other" class="text">右: それ以外</div>
     </div>
     <div id="text" class="text">準備中...</div>
     <div id="score">ポイント: 0</div>
@@ -78,13 +77,13 @@
 
         document.addEventListener("keydown", (event) => {
             if (event.key === "ArrowRight") { // 右矢印キー
-                if (textElement.textContent === "pocari") {
+                if (textElement.textContent !== "pocari") {
                     updateScore(1);
                 } else {
                     endGame();
                 }
             } else if (event.key === "ArrowLeft") { // 左矢印キー
-                if (textElement.textContent !== "pocari") {
+                if (textElement.textContent === "pocari") {
                     updateScore(1);
                 } else {
                     endGame();
