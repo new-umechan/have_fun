@@ -90,10 +90,8 @@
         }
 
         function resetPosition() {
-            setTimeout(() => {
-                textElement.style.transition = ''; // トランジションをリセット
-                textElement.style.transform = 'translate(-50%, -50%)';
-            }, 500); // フェードアウト後に位置をリセット
+            textElement.style.transition = ''; // トランジションをリセット
+            textElement.style.transform = 'translate(-50%, -50%)';
         }
 
         startGame();
