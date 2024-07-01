@@ -60,18 +60,10 @@
             textElement.style.transition = 'none';
             textElement.style.transform = 'translateX(0px)';
             textElement.style.opacity = 1;
-            setTimeout(() => {
-                textElement.style.transition = 'transform 0.2s cubic-bezier(0.4, 0, 1, 1), opacity 0.2s';
-            }, 0);
-        }
-
-        function updatePosition() {
-            const position = parseFloat(textElement.style.transform.replace('translateX(', '').replace('px)', ''));
-            const opacity = 1 - Math.min(Math.abs(position) / maxWidth, 1);
-            textElement.style.opacity = opacity;
         }
 
         function fadeOutText() {
+            textElement.style.transition = 'opacity 0.2s';
             textElement.style.opacity = 0;
         }
 
@@ -93,7 +85,6 @@
                     endGame();
                 }
             }
-            updatePosition();
             setTimeout(() => {
                 fadeOutText();
                 setTimeout(() => {
