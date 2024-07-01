@@ -27,17 +27,17 @@ body {
     transition: left 0.2s cubic-bezier(0.4, 0, 1, 1), opacity 0.1s; /* 透明度と位置の変化速度 */
 }
 
-#text {
-    position: absolute; /* 絶対位置に設定 */
-    left: 50%; /* 画面の中央に位置 */
-    top: 50%; /* 縦方向も中央に */
-    transform: translate(-50%, -50%); /* 中央揃えのための補正 */
-    font-size: 3em;
-    margin: 20px;
-    transition: left 0.2s cubic-bezier(0.4, 0, 1, 1), opacity 0.1s; /* 透明度の変化を早く */
-}
-
 #score, #timer {
     font-size: 1.5em;
     margin: 10px;
+    position: absolute;
+    top: 10px; /* 画面の上部に固定 */
+}
+
+#score {
+    left: 10px; /* 左に固定 */
+}
+
+#timer {
+    right: 10px; /* 右に固定 */
 }
