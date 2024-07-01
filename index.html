@@ -4,39 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pocari判定ゲーム</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f0f0f0;
-            overflow: hidden; /* 画面外に要素が出ないようにする */
-        }
-        #container {
-            display: flex;
-            justify-content: space-around;
-            width: 100%;
-            max-width: 800px;
-        }
-        .text {
-            font-size: 2em;
-            margin: 20px;
-        }
-        #text {
-            font-size: 3em; /* フォントサイズを大きく設定 */
-            margin: 20px;
-            position: relative;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 1, 1), opacity 0.5s; /* 加速度的に動くように設定、透明度も変更 */
-        }
-        #score, #timer {
-            font-size: 1.5em;
-            margin: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div id="container">
@@ -48,12 +16,12 @@
     <div id="timer">残り時間: 5秒</div>
     <script>
         let score = 0;
-        let timeLeft = 5; // 初期残り時間を5秒に設定
+        let timeLeft = 5;
         const texts = ["pocari", "pacori", "pocory", "pacary"];
         const textElement = document.getElementById("text");
         const scoreElement = document.getElementById("score");
         const timerElement = document.getElementById("timer");
-        const maxWidth = window.innerWidth / 4; // 中央からの最大幅を設定
+        const maxWidth = window.innerWidth / 4;
 
         function updateText() {
             const randomIndex = Math.floor(Math.random() * texts.length);
@@ -95,21 +63,21 @@
 
         function updatePosition() {
             const position = parseFloat(textElement.style.transform.replace('translateX(', '').replace('px)', ''));
-            const opacity = 1 - Math.min(Math.abs(position) / maxWidth, 1); // 位置に基づいて透明度を計算
+            const opacity = 1 - Math.min(Math.abs(position) / maxWidth, 1);
             textElement.style.opacity = opacity;
         }
 
         document.addEventListener("keydown", (event) => {
-            if (event.key === "ArrowRight") { // 右矢印キー
-                textElement.style.transform = `translateX(${2 * maxWidth}px)`; // 右に動かす
+            if (event.key === "ArrowRight") {
+                textElement.style.transform = `translateX(${2 * maxWidth}px)`;
                 if (textElement.textContent !== "pocari") {
                     updateScore(1);
                     resetTimer();
                 } else {
                     endGame();
                 }
-            } else if (event.key === "ArrowLeft") { // 左矢印キー
-                textElement.style.transform = `translateX(${-2 * maxWidth}px)`; // 左に動かす
+            } else if (event.key === "ArrowLeft") {
+                textElement.style.transform = `translateX(${-2 * maxWidth}px)`;
                 if (textElement.textContent === "pocari") {
                     updateScore(1);
                     resetTimer();
@@ -118,8 +86,8 @@
                 }
             }
             updatePosition();
-            updateText();
-            resetPosition(); // テキストの位置をリセット
+            setTimeout(updateText, 500); // 少しの遅延を追加して視覚的な効果を改善
+            setTimeout(resetPosition, 500); // テキストの位置リセットを少し遅らせる
         });
 
         startGame();
