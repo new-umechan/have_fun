@@ -57,8 +57,12 @@
         }
 
         function resetPosition() {
+            textElement.style.transition = 'none';
             textElement.style.transform = 'translateX(0px)';
             textElement.style.opacity = 1;
+            setTimeout(() => {
+                textElement.style.transition = 'transform 0.2s cubic-bezier(0.4, 0, 1, 1), opacity 0.2s';
+            }, 0);
         }
 
         function updatePosition() {
@@ -86,8 +90,8 @@
                 }
             }
             updatePosition();
-            setTimeout(updateText, 500); // 少しの遅延を追加して視覚的な効果を改善
-            setTimeout(resetPosition, 500); // テキストの位置リセットを少し遅らせる
+            setTimeout(updateText, 200);
+            setTimeout(resetPosition, 200); // すぐに位置をリセット
         });
 
         startGame();
