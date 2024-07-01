@@ -72,6 +72,7 @@
                 textElement.style.transform = `translateX(${2 * maxWidth}px)`;
                 if (textElement.textContent !== "pocari") {
                     updateScore(1);
+                    fadeOoutText();
                     resetTimer();
                 } else {
                     endGame();
@@ -80,6 +81,7 @@
                 textElement.style.transform = `translateX(${-2 * maxWidth}px)`;
                 if (textElement.textContent === "pocari") {
                     updateScore(1);
+                    fadeOoutText();
                     resetTimer();
                 } else {
                     endGame();
