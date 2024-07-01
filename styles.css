@@ -36,11 +36,10 @@ body {
 
 #start-button {
     padding: 8px 16px;
-    font-size: 1.5em;
+    font-size: 18px;
     cursor: pointer;
     border-radius: 10px; /* 角を丸くする */
 }
-
 
 #container {
     display: flex;
@@ -87,11 +86,32 @@ body {
     font-family: Arial, sans-serif; /* フォントを統一 */
 }
 
+#game-over h1 {
+    font-size: 1.5em; /* 文字のサイズを小さくする */
+}
+
+#game-over p {
+    font-size: 0.6em; /* Your Scoreのフォントサイズを小さくする */
+    margin: 6px 0 0 0; /* 上に少し余白を設定 */
+}
+
+/* failed withの文字サイズをさらに小さくする */
+#failed-text {
+    font-size: 0.6em; /* フォントサイズを設定 */
+    margin: 4px 0 0 0; /* 上に少し余白を設定 */
+}
+
 #game-over-button {
     padding: 8px 16px;
-    font-size: 1em;
+    font-size: 18px;
     cursor: pointer;
     border-radius: 10px; /* 角を丸くする */
+}
+
+#start-button:active, #game-over-button:active {
+    transform: scale(1.1);
+    background-color: black;
+    color: white;
 }
 
 @keyframes moveRight {
