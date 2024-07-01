@@ -22,7 +22,11 @@
             max-width: 800px;
         }
         .text {
-            font-size: 2em; /* フォントサイズを小さく設定 */
+            font-size: 2em;
+            margin: 20px;
+        }
+        #text {
+            font-size: 3em; /* フォントサイズを大きく設定 */
             margin: 20px;
         }
         #score, #timer {
@@ -38,10 +42,10 @@
     </div>
     <div id="text" class="text">準備中...</div>
     <div id="score">ポイント: 0</div>
-    <div id="timer">残り時間: 10秒</div>
+    <div id="timer">残り時間: 5秒</div>
     <script>
         let score = 0;
-        let timeLeft = 10;
+        let timeLeft = 5; // 初期残り時間を5秒に設定
         const texts = ["pocari", "pacori", "pocory", "pacary"];
         const textElement = document.getElementById("text");
         const scoreElement = document.getElementById("score");
@@ -62,6 +66,11 @@
             location.reload();
         }
 
+        function resetTimer() {
+            timeLeft = 5;
+            timerElement.textContent = `残り時間: ${timeLeft}秒`;
+        }
+
         function startGame() {
             updateText();
             const gameInterval = setInterval(() => {
@@ -79,12 +88,14 @@
             if (event.key === "ArrowRight") { // 右矢印キー
                 if (textElement.textContent !== "pocari") {
                     updateScore(1);
+                    resetTimer();
                 } else {
                     endGame();
                 }
             } else if (event.key === "ArrowLeft") { // 左矢印キー
                 if (textElement.textContent === "pocari") {
                     updateScore(1);
+                    resetTimer();
                 } else {
                     endGame();
                 }
