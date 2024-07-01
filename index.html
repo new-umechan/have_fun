@@ -5,10 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pocari判定ゲーム</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* ボタンを押した時のエフェクト */
+        #start-button:active, #game-over-button:active {
+            transform: scale(1.1);
+            background-color: black;
+            color: white;
+        }
+
+        /* ボタンのトランジション */
+        #start-button, #game-over-button {
+            transition: transform 0.1s ease, background-color 0.1s ease, color 0.1s ease;
+        }
+    </style>
 </head>
 <body>
     <div id="start-screen">
         <h1>pocari判定ゲーム</h1>
+        <p>操作方法：pocariは「←」、それ以外は「→」</p>
         <button id="start-button">スタート</button>
     </div>
     
@@ -24,15 +38,17 @@
     <div id="game-over" style="display: none;">
         <h1>Game Over</h1>
         <p id="final-score">Your Score: 0</p>
-        <button id="game-over-button" onclick="restartGame()">Restart</button>
+        <p id="failed-text">Failed with: </p>
+        <button id="game-over-button" onclick="restartGame()">リスタート</button>
     </div>
 
     <script>
         let score = 0;
         let timeLeft = 5.0;
-        let initialTime = 5.0; // 初期時間の設定
-        let count = 0; // カウント数を追跡
-        const texts = ["pacori", "pocary", "qacari", "pocani", "pocori", "aquarius", "morimori"]; // "pocari"以外のテキスト
+        let initialTime = 5.0;
+        let count = 0;
+        let isGameRunning = false;
+        const texts = ["pacori", "pocary", "qacari", "pocani", "pocori", "aquarius", "morimori"];
         const textElement = document.getElementById("text");
         const timerElement = document.getElementById("timer");
         const countElement = document.getElementById("count");
@@ -70,27 +86,31 @@
                 notificationElement.style.opacity = 0;
                 setTimeout(() => {
                     notificationElement.style.display = "none";
-                }, 500); // フェードアウトの時間と一致させる
-            }, 1000); // 1秒後にフェードアウト開始
+                }, 500);
+            }, 1000);
         }
 
         function updateScore(points) {
             score += points;
-            count += 1; // カウントを増やす
-            countElement.textContent = count; // カウントを表示
+            count += 1;
+            countElement.textContent = count;
             if (count % 10 === 0) {
-                initialTime *= 0.9; // 初期時間を0.9倍にする
-                showNotification(); // Level up! 時間が短くなりますを表示
+                initialTime *= 0.9;
+                showNotification();
             }
         }
 
         function endGame() {
+            isGameRunning = false;
             containerElement.style.display = "none";
             textElement.style.display = "none";
             timerElement.style.display = "none";
             countElement.style.display = "none";
             finalScoreElement.textContent = `Your Score: ${score}`;
+            const failedTextElement = document.getElementById("failed-text");
+            failedTextElement.textContent = `Failed with: ${textElement.textContent}`;
             gameOverElement.style.display = "flex";
+            document.body.classList.remove('active');
         }
 
         function resetTimer() {
@@ -99,24 +119,32 @@
         }
 
         function startGame() {
+            isGameRunning = true;
             startScreenElement.style.display = "none";
             containerElement.style.display = "flex";
             textElement.style.display = "block";
             timerElement.style.display = "block";
             countElement.style.display = "block";
             updateText();
+            document.body.classList.add('active');
             const gameInterval = setInterval(() => {
-                if (timeLeft <= 0) {
-                    clearInterval(gameInterval);
-                    endGame();
+                if (isGameRunning) {
+                    if (timeLeft <= 0) {
+                        clearInterval(gameInterval);
+                        endGame();
+                    } else {
+                        timeLeft -= 0.1;
+                        timerElement.textContent = `${timeLeft.toFixed(1)} s`;
+                    }
                 } else {
-                    timeLeft -= 0.1;
-                    timerElement.textContent = `${timeLeft.toFixed(1)} s`;
+                    clearInterval(gameInterval);
                 }
             }, 100);
         }
 
         document.addEventListener("keydown", (event) => {
+            if (!isGameRunning) return;
+
             if (event.key === "ArrowRight") {
                 textElement.style.animationName = 'moveRight';
                 if (textElement.textContent !== "pocari") {
@@ -136,26 +164,25 @@
             }
 
             setTimeout(() => {
-                resetPosition(); // 位置を即座にリセット
+                resetPosition();
                 updateText();
-            }, 200); // 文字がフェードアウトする時間を確保してから新しい文字を表示
+            }, 200);
         });
 
         function resetPosition() {
-            textElement.style.transition = ''; // トランジションをリセット
-            textElement.style.transform = ''; // 初期位置にリセット
-            textElement.style.animationName = ''; // アニメーションをリセット
-            adjustTextPosition(); // 位置を再調整
+            textElement.style.transition = '';
+            textElement.style.transform = '';
+            textElement.style.animationName = '';
+            adjustTextPosition();
         }
 
         function restartGame() {
-            location.reload(); // ゲームをリロードして再スタート
+            location.reload();
         }
 
         startButton.addEventListener('click', startGame);
-        gameOverButton.addEventListener('click', restartGame); // Restartボタンにイベントリスナーを追加
-
-        window.addEventListener('resize', adjustTextPosition); // ウィンドウサイズ変更時に再調整
+        gameOverButton.addEventListener('click', restartGame);
+        window.addEventListener('resize', adjustTextPosition);
     </script>
 </body>
 </html>
