@@ -18,13 +18,13 @@ body {
 }
 
 #text {
-    position: absolute; /* 絶対位置に設定 */
-    left: 50%; /* 横方向の中央に位置 */
-    top: 50%; /* 縦方向の中央に */
-    transform: translate(-50%, -50%); /* 中央揃えのための補正 */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     font-size: 3em;
     margin: 30px;
-    transition: opacity 0.5s ease; /* 透明度の変化速度 */
+    transition: opacity 0.5s ease;
     animation-duration: 0.5s;
     animation-fill-mode: forwards;
 }
@@ -40,26 +40,26 @@ body {
 }
 
 @keyframes moveRight {
-    from { transform: translate(-50%, -50%); }
-    to { transform: translate(calc(-50% + 300px), -50%); }
+    0% { transform: translate(-50%, -50%); opacity: 1; }
+    100% { transform: translate(calc(-50% + 300px), -50%); opacity: 0; }
 }
 
 @keyframes moveLeft {
-    from { transform: translate(-50%, -50%); }
-    to { transform: translate(calc(-50% - 300px), -50%); }
+    0% { transform: translate(-50%, -50%); opacity: 1; }
+    100% { transform: translate(calc(-50% - 300px), -50%); opacity: 0; }
 }
 
 #score, #timer {
     font-size: 1.5em;
     margin: 10px;
     position: absolute;
-    top: 10px; /* 画面の上部に固定 */
+    top: 10px;
 }
 
 #score {
-    left: 10px; /* 左に固定 */
+    left: 10px;
 }
 
 #timer {
-    right: 10px; /* 右に固定 */
+    right: 10px;
 }
