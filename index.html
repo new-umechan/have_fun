@@ -64,7 +64,7 @@
             textElement.style.transition = 'opacity 0.03s';
             textElement.style.opacity = 0;
         }
-
+        
         document.addEventListener("keydown", (event) => {
             if (event.key === "ArrowRight") {
                 textElement.style.transform = 'translate(calc(-50% + 300px), -50%)';
@@ -83,14 +83,24 @@
                     endGame();
                 }
             }
+        
             setTimeout(() => {
                 fadeOutText();
                 setTimeout(() => {
                     resetPosition(); // 位置を即座にリセット
                     updateText();
-                }, 150); // フェードアウト後に新しい文字を表示するまでの時間
+                    textElement.style.opacity = 1; // 新しいテキストを表示する際に透明度をリセット
+                }, 300); // フェードアウト後に新しい文字を表示するまでの時間
             }, 100); // 文字がフェードアウトする時間を確保してから新しい文字を表示
         });
+        
+        function fadeOutText() {
+            textElement.style.opacity = 0;
+        }
+        
+        function resetPosition() {
+            textElement.style.transform = 'translate(-50%, -50%)';
+        }
 
         startGame();
     </script>
